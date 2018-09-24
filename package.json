@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "antd": "^3.9.3",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.0",
     "react": "^16.5.2",
@@ -17,7 +19,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --verbose --coverage",
+    "watch": "react-scripts test --env=jsdom --watch=*.js",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

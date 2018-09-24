@@ -41,6 +41,6 @@ export const AddMarkerPlaceholder = styled.div`
 
 export const MarkerListPlaceholder = styled.div`
   width: 100%;
-  height: calc(80vh + 50px);
+  height: 100%;
   background-color: #625772;
 `;
