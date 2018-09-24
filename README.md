@@ -1,2 +1,1 @@
-# frontend-task
-frontend test task
+# Frontend test task
