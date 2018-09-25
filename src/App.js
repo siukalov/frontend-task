@@ -4,7 +4,6 @@ import {
   LayoutPositioned,
   Aside,
   Content,
-  AddMarkerPlaceholder,
   MarkerListPlaceholder,
   MapPlaceholder,
 } from './Styled';

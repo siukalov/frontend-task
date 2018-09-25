@@ -1,27 +1,10 @@
 import React from 'react';
 import isUndefined from 'lodash/isUndefined';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Form, Button, Input } from 'antd';
 import { addMarker } from '../actions';
-
-const FormItem = Form.Item;
-
-const FormInput = styled(FormItem)`
-  display: flex;
-  flex-grow: 1;
-
-  & > .ant-form-item-control-wrapper {
-    flex-grow: 1;
-    margin-right: 8px;
-  }
-`;
-
-const DirectionForm = styled(Form)`
-  margin: 16px 16px 0;
-  display: flex;
-  justify-content: flex-start;
-`;
+import {
+  Input, Form, FormInput, FormItem, Button, MarkerForm,
+} from './Styled';
 
 const fieldDecoratorRules = {
   rules: [{ required: true, min: 1, message: 'Please input a marker name' }],
@@ -31,7 +14,7 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-class AddDirection extends React.Component {
+class AddMarker extends React.Component {
   componentDidMount() {
     // To disabled the add button at the initial render
     const { form } = this.props;
@@ -72,7 +55,7 @@ class AddDirection extends React.Component {
     const nameError = isFieldTouched('name') && getFieldError('name');
 
     return (
-      <DirectionForm
+      <MarkerForm
         hideRequiredMark
         onSubmit={this.handleSubmit(resetFields, getFieldValue, dispatch)}
       >
@@ -84,9 +67,9 @@ class AddDirection extends React.Component {
             Add marker
           </Button>
         </FormItem>
-      </DirectionForm>
+      </MarkerForm>
     );
   }
 }
 
-export default connect()(Form.create({})(AddDirection));
+export default connect()(Form.create({})(AddMarker));
