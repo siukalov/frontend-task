@@ -13,7 +13,6 @@ describe('<AddMarker />', () => {
 
     it('should have a submit button', () => {
       expect(wrapper.find(Button)).toHaveLength(1);
-
       expect(wrapper.find(Button).prop('htmlType')).toBe('submit');
     });
 
