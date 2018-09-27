@@ -33,14 +33,8 @@ export const MapPlaceholder = styled.div`
   background-color: #f9a1bc;
 `;
 
-export const AddMarkerPlaceholder = styled.div`
-  width: 100%;
-  height: 20vh;
-  background-color: #a9eee6;
-`;
-
 export const MarkerListPlaceholder = styled.div`
   width: 100%;
-  height: calc(80vh + 50px);
+  height: 100%;
   background-color: #625772;
 `;
