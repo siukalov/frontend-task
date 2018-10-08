@@ -6,6 +6,7 @@
     "antd": "^3.9.3",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
+    "load-js": "^3.0.3",
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.2",
@@ -16,17 +17,20 @@
     "react-sortable-hoc": "^0.8.3",
     "redux": "^4.0.0",
     "seamless-immutable": "^7.1.4",
+    "sinon": "^6.3.4",
     "styled-components": "^3.4.9"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --verbose --coverage",
+    "cover": "react-scripts test --env=jsdom --verbose --coverage",
+    "test": "react-scripts test --env=jsdom",
     "watch": "react-scripts test --env=jsdom --watch=*.js",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "babel-eslint": "^9.0.0",
+    "@types/jest": "^23.3.2",
+    "babel-eslint": "^10.0.1",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.1.0",

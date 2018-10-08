@@ -5,6 +5,7 @@ import {
   Input, Form, FormInput, FormItem, Button, MarkerForm,
 } from './Styled';
 
+
 const fieldDecoratorRules = {
   rules: [{ required: true, min: 1, message: 'Please input a marker name' }],
 };
@@ -36,10 +37,7 @@ class AddMarker extends React.Component {
   handleSubmit = (e) => {
     const {
       addMarker,
-      form: {
-        getFieldValue,
-        resetFields,
-      },
+      form: { getFieldValue, resetFields },
     } = this.props;
 
     e.preventDefault();
@@ -52,11 +50,7 @@ class AddMarker extends React.Component {
     const { form } = this.props;
 
     const {
-      getFieldDecorator,
-      getFieldsError,
-      getFieldError,
-      isFieldTouched,
-
+      getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
     } = form;
 
     const fieldDecorator = getFieldDecorator('name', fieldDecoratorRules);
@@ -64,10 +58,7 @@ class AddMarker extends React.Component {
     const nameError = isFieldTouched('name') && getFieldError('name');
 
     return (
-      <MarkerForm
-        hideRequiredMark
-        onSubmit={this.handleSubmit}
-      >
+      <MarkerForm hideRequiredMark onSubmit={this.handleSubmit}>
         <FormInput validateStatus={nameError ? 'error' : ''} help={nameError || ''}>
           {fieldDecorator(<Input />)}
         </FormInput>

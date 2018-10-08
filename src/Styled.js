@@ -32,9 +32,3 @@ export const MapPlaceholder = styled.div`
   height: 100vh;
   background-color: #f9a1bc;
 `;
-
-export const MarkerListPlaceholder = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: #625772;
-`;
