@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import loadMaps from './loadjs';
+import loadMaps from './loadMaps';
 
 class Ymaps extends Component {
   state = { ymaps: null };
@@ -10,26 +10,28 @@ class Ymaps extends Component {
   };
 
   componentDidMount() {
-    const ymaps = loadMaps();
-    this.setState({ ymaps });
+    console.log('componentDidMount');
+    loadMaps().then(ymaps => console.log('ymaps', ymaps) || this.setState({ ymaps }));
   }
 
   getChildren = () => {
+    console.log('getChildren');
     const { children } = this.props;
     const { ymaps } = this.state;
+
+    console.log('@@ ymaps', ymaps);
     let childrenWithYmaps = null;
 
-    if (ymaps) {
-      childrenWithYmaps = React.Children.map(children, child => React.cloneElement(child, { ymaps }));
-      return childrenWithYmaps;
-    }
-
+    childrenWithYmaps = React.Children.map(children, child => React.cloneElement(child, { ymaps }));
     return childrenWithYmaps;
   };
 
   render() {
+    console.log('render');
+    const { ymaps } = this.state;
+
     const children = this.getChildren();
-    return <React.Fragment>{children}</React.Fragment>;
+    return <React.Fragment>{ymaps && children}</React.Fragment>;
   }
 }
 
