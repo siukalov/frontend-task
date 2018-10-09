@@ -10,16 +10,13 @@ class Ymaps extends Component {
   };
 
   componentDidMount() {
-    console.log('componentDidMount');
-    loadMaps().then(ymaps => console.log('ymaps', ymaps) || this.setState({ ymaps }));
+    loadMaps().then(ymaps => this.setState({ ymaps }));
   }
 
   getChildren = () => {
-    console.log('getChildren');
     const { children } = this.props;
     const { ymaps } = this.state;
 
-    console.log('@@ ymaps', ymaps);
     let childrenWithYmaps = null;
 
     childrenWithYmaps = React.Children.map(children, child => React.cloneElement(child, { ymaps }));
@@ -27,7 +24,6 @@ class Ymaps extends Component {
   };
 
   render() {
-    console.log('render');
     const { ymaps } = this.state;
 
     const children = this.getChildren();

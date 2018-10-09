@@ -12,6 +12,7 @@ describe('Ymaps', () => {
   beforeAll(() => {
     loadMaps.mockReturnValue(Promise.resolve(ymaps));
     const Map = props => <div id="map" {...props} />;
+
     wrapper = mount(
       <Ymaps>
         <Map />

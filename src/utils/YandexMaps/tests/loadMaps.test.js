@@ -7,7 +7,11 @@ describe('loadMaps', () => {
   const ymaps = { loaded: true };
 
   beforeAll(() => {
-    loadJS.mockImplementation(() => Promise.resolve('success'));
+    loadJS.mockReturnValue(Promise.resolve('success'));
+  });
+
+  afterAll(() => {
+    jest.clearAllMocks();
   });
 
   it('should load ymaps', async () => {
