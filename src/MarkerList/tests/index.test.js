@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MarkerList, mapStateToProps, mapDispatchToProps } from '../index';
 import { Item } from '../Styled';
-import preloadedState from './preloadedState';
+import preloadedState from '../../utils/preloadedState';
 
 describe('<MarkerList />', () => {
   let wrapper;

@@ -13,21 +13,15 @@ class Ymaps extends Component {
     loadMaps().then(ymaps => this.setState({ ymaps }));
   }
 
-  getChildren = () => {
-    const { children } = this.props;
-    const { ymaps } = this.state;
-
-    let childrenWithYmaps = null;
-
-    childrenWithYmaps = React.Children.map(children, child => React.cloneElement(child, { ymaps }));
-    return childrenWithYmaps;
+  createMapContainer = (ymaps) => {
+    const { children, ...passThroughProps } = this.props;
+    const props = { ymaps, ...passThroughProps };
+    return React.cloneElement(React.Children.only(children), props);
   };
 
   render() {
     const { ymaps } = this.state;
-
-    const children = this.getChildren();
-    return <React.Fragment>{ymaps && children}</React.Fragment>;
+    return ymaps && this.createMapContainer(ymaps);
   }
 }
 

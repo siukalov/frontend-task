@@ -1,4 +1,6 @@
-import { ADD_MARKER, REMOVE_MARKER, REORDER_MARKERS } from './actionTypes';
+import {
+  ADD_MARKER, REMOVE_MARKER, REORDER_MARKERS, SAVE_MAP_CENTER,
+} from './actionTypes';
 
 const createCounter = () => {
   let counter = -1;
@@ -25,4 +27,9 @@ export const reorderMarkers = (oldIndex, newIndex) => ({
   type: REORDER_MARKERS,
   oldIndex,
   newIndex,
+});
+
+export const saveCenter = center => ({
+  type: SAVE_MAP_CENTER,
+  center,
 });

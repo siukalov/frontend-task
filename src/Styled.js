@@ -26,9 +26,3 @@ export const Content = styled(AntdContent)`
   height: 100vh;
   width: 100%;
 `;
-
-export const MapPlaceholder = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: #f9a1bc;
-`;

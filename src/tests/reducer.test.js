@@ -136,4 +136,20 @@ describe('Reducer', () => {
     };
     expect(reducer(state, actions.reorderMarkers(oldIndex, newIndex))).toEqual(nextState);
   });
+
+  it('should handle SAVE_MAP_CENTER', () => {
+    const state = Immutable({
+      center: null,
+      markers: [],
+    });
+
+    const newCenter = [55.77115966031854, 37.670387870739184];
+
+    const nextState = Immutable({
+      center: newCenter,
+      markers: [],
+    });
+
+    expect(reducer(state, actions.saveCenter(newCenter))).toEqual(nextState);
+  });
 });

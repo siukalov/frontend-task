@@ -5,8 +5,16 @@
     "mocha": true,
     "jest": true
   },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "16.5"
+    }
+  },
   "extends": "airbnb",
   "rules": {
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "import/no-named-as-default": 0,
+    "no-return-assign": ["error", "except-parens"]
   }
 }

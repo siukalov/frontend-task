@@ -1,3 +1,4 @@
 export const ADD_MARKER = 'ADD_MARKER';
 export const REMOVE_MARKER = 'REMOVE_MARKER';
 export const REORDER_MARKERS = 'REORDER_MARKERS';
+export const SAVE_MAP_CENTER = 'SAVE_MAP_CENTER';

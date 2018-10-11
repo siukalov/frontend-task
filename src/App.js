@@ -1,9 +1,10 @@
 import React from 'react';
 import {
-  Layout, LayoutPositioned, Aside, Content, MapPlaceholder,
+  Layout, LayoutPositioned, Aside, Content,
 } from './Styled';
 import AddMarker from './AddMarker';
 import MarkerList from './MarkerList';
+import Map from './Map';
 
 const App = () => (
   <Layout>
@@ -13,7 +14,14 @@ const App = () => (
     </Aside>
     <LayoutPositioned>
       <Content>
-        <MapPlaceholder />
+        <Map
+          settings={{
+            center: [55.76, 37.64],
+            zoom: 16,
+            controls: ['zoomControl'],
+            behaviors: ['drag'],
+          }}
+        />
       </Content>
     </LayoutPositioned>
   </Layout>
