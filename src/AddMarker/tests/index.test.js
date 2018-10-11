@@ -35,7 +35,7 @@ describe('<AddMarker />', () => {
       expect(addMarkerSpy).toHaveBeenCalledWith('Home');
     });
 
-    it('mapDispatchToProps', () => {
+    it('should do mapDispatchToProps', () => {
       expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('addMarker');
 
       mapDispatchToProps(dispatchSpy).addMarker('Home');

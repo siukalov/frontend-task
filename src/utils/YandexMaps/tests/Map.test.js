@@ -1,20 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Map from '../Map';
+import YmapsStub from '../../ymapsStub';
 
 describe('Map', () => {
   let wrapper;
-  let ymaps;
-
-  const addEvent = jest.fn((eventName, eventFunc) => (ymaps[eventName] = eventFunc));
-  const createMap = jest.fn(() => ({
-    events: { add: addEvent },
-  }));
-
-  ymaps = {
-    ready: jest.fn(callback => callback()),
-    Map: createMap,
-  };
+  const ymaps = new YmapsStub();
 
   const settings = {
     center: [55.76, 37.64],
@@ -22,32 +13,24 @@ describe('Map', () => {
     controls: ['zoomControl'],
     behaviors: ['drag'],
   };
+  const defualtProps = {
+    width: '100%',
+    height: '100vh',
+    settings,
+    ymaps,
+  };
 
   it('should create mapInstance', () => {
-    const props = {
-      width: '100%',
-      height: '100vh',
-      settings,
-      ymaps,
-    };
+    wrapper = mount(<Map {...defualtProps} />);
 
-    wrapper = mount(<Map {...props} />);
-
-    expect(wrapper.state('mapInstance')).toBeTruthy();
+    expect(wrapper.state('mapInstance')).toEqual(expect.any(Object));
   });
 
   it('should call map events handlers', () => {
-    const props = {
-      width: '100%',
-      height: '100vh',
-      settings,
-      ymaps,
-    };
-
-    wrapper = mount(<Map {...props} />);
+    wrapper = mount(<Map {...defualtProps} />);
     wrapper.instance().forceUpdate = jest.fn();
 
-    ymaps.actionend();
+    wrapper.state('mapInstance').actionend();
 
     expect(wrapper.instance().forceUpdate).toHaveBeenCalled();
   });
@@ -55,10 +38,7 @@ describe('Map', () => {
   it('should call captureMapUpdateCallback when given', () => {
     const captureMapUpdateCallback = jest.fn();
     const props = {
-      width: '100%',
-      height: '100vh',
-      settings,
-      ymaps,
+      ...defualtProps,
       captureMapUpdateCallback,
     };
 
@@ -67,27 +47,19 @@ describe('Map', () => {
   });
 
   it('should pass ymaps and mapInstance to its children', () => {
-    const props = {
-      width: '100%',
-      height: '100vh',
-      settings,
-      ymaps,
-    };
-
     const MapChildElement = () => <div />;
 
     wrapper = mount(
-      <Map {...props}>
+      <Map {...defualtProps}>
         <MapChildElement id="child1" />
         <MapChildElement id="child2" />
       </Map>,
     );
-    const mapInstance = new ymaps.Map();
 
     expect(wrapper.find(MapChildElement).map(node => node.prop('ymaps'))).toEqual([ymaps, ymaps]);
     expect(wrapper.find(MapChildElement).map(node => node.prop('mapInstance'))).toEqual([
-      mapInstance,
-      mapInstance,
+      expect.any(Object),
+      expect.any(Object),
     ]);
   });
 });

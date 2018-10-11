@@ -26,14 +26,14 @@ describe('<MarkerList />', () => {
       dispatchSpy = jest.fn();
     });
 
-    it('mapDispatchToProps handleRemove', () => {
+    it('should do mapDispatchToProps for handleRemove', () => {
       expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('handleRemove');
 
       mapDispatchToProps(dispatchSpy).handleRemove(0);
       expect(dispatchSpy).toHaveBeenCalledWith({ id: 0, type: 'REMOVE_MARKER' });
     });
 
-    it('mapDispatchToProps onSortEnd', () => {
+    it('should do mapDispatchToProps for onSortEnd', () => {
       expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('onSortEnd');
 
       const oldIndex = 0;
@@ -46,7 +46,7 @@ describe('<MarkerList />', () => {
       });
     });
 
-    it('mapStateToProps markers', () => {
+    it('should do mapStateToProps for the markers prop', () => {
       expect(mapStateToProps(preloadedState)).toEqual({ markers });
     });
   });

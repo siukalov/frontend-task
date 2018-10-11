@@ -2,46 +2,33 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { CustomMap, mapStateToProps, mapDispatchToProps } from '../Map';
 import preloadedState from '../utils/preloadedState';
+import YmapsStub from '../utils/ymapsStub';
 import loadMaps from '../utils/YandexMaps/loadMaps';
 
 jest.mock('../utils/YandexMaps/loadMaps');
 
 describe('<Map />', () => {
   let wrapper;
-  let ymaps;
-  let settings;
   const inititialMapCenter = [60.55, 40.65];
 
-  beforeAll(() => {
-    settings = {
-      center: inititialMapCenter,
-      zoom: 16,
-      controls: ['zoomControl'],
-      behaviors: ['drag'],
-    };
+  const settings = {
+    center: inititialMapCenter,
+    zoom: 16,
+    controls: ['zoomControl'],
+    behaviors: ['drag'],
+  };
 
-    const addEvent = jest.fn((eventName, eventFunc) => (ymaps[eventName] = eventFunc));
-    const createMap = jest.fn(() => ({
-      events: { add: addEvent },
-      getCenter: jest.fn(() => inititialMapCenter),
-    }));
-
-    ymaps = {
-      ready: jest.fn(callback => callback()),
-      Map: createMap,
-    };
-
-    loadMaps.mockReturnValue(Promise.resolve(ymaps));
-  });
+  const ymaps = new YmapsStub();
+  loadMaps.mockReturnValue(Promise.resolve(ymaps));
 
   describe('Rendering', () => {
     beforeAll(() => {
       const props = {
         width: '100%',
         height: '100vh',
-        settings,
         setCenter: jest.fn(),
         center: inititialMapCenter,
+        settings,
       };
 
       wrapper = mount(<CustomMap {...props} />);
@@ -62,9 +49,9 @@ describe('<Map />', () => {
       props = {
         width: '100%',
         height: '100vh',
-        settings,
         setCenter: jest.fn(),
         center: coordinates,
+        settings,
       };
 
       wrapper = mount(<CustomMap {...props} />);

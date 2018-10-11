@@ -10,7 +10,6 @@ const captureMapUpdate = (props, state) => {
   const { center, setCenter } = props;
 
   const currentCenter = mapInstance.getCenter();
-  console.log('center, currentCenter', center, currentCenter);
 
   if (!isEqual(center, currentCenter)) {
     setCenter(currentCenter);
@@ -24,8 +23,7 @@ const CustomMap = props => (
 );
 
 const mapStateToProps = state => ({
-  center: state.center,
-  markers: state.markers,
+  ...state,
 });
 
 const mapDispatchToProps = dispatch => ({
