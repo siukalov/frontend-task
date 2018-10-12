@@ -27,12 +27,12 @@ describe('Map', () => {
   });
 
   it('should call map events handlers', () => {
-    wrapper = mount(<Map {...defualtProps} />);
-    wrapper.instance().forceUpdate = jest.fn();
+    const captureMapUpdateCallback = jest.fn();
 
+    wrapper = mount(<Map {...defualtProps} captureMapUpdateCallback={captureMapUpdateCallback} />);
     wrapper.state('mapInstance').actionend();
 
-    expect(wrapper.instance().forceUpdate).toHaveBeenCalled();
+    expect(captureMapUpdateCallback).toHaveBeenCalled();
   });
 
   it('should call captureMapUpdateCallback when given', () => {

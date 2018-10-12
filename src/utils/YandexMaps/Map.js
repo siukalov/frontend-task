@@ -21,26 +21,22 @@ class Map extends Component {
 
   mapParentNode = React.createRef();
 
-  static getDerivedStateFromProps(props, state) {
-    const { captureMapUpdateCallback } = props;
-    const { mapInstance } = state;
-
-    if (mapInstance && captureMapUpdateCallback) {
-      captureMapUpdateCallback(props, state);
-    }
-
-    return null;
-  }
-
   componentDidMount() {
-    const { ymaps, settings } = this.props;
+    const { ymaps, settings, captureMapUpdateCallback } = this.props;
 
     let mapInstance;
 
     ymaps.ready(() => {
       mapInstance = new ymaps.Map(this.mapParentNode.current, settings);
-      mapInstance.events.add('actionend', () => this.forceUpdate()); // notify React the map has updated
       this.setState({ mapInstance });
+
+      if (captureMapUpdateCallback) {
+        // pass Map data to React when the Map has been initialized
+        captureMapUpdateCallback(this.props, { mapInstance });
+
+        // pass Map data to React when the Map has been updated
+        mapInstance.events.add('actionend', () => captureMapUpdateCallback(this.props, this.state));
+      }
     });
   }
 
