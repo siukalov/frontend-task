@@ -7,7 +7,7 @@ class Placemark extends Component {
   // see https://github.com/facebook/react/issues/6653
   static defaultProps = {
     ymaps: undefined,
-    mapInstance: undefined,
+    mapInstance: undefined
   };
 
   static propTypes = {
@@ -15,23 +15,21 @@ class Placemark extends Component {
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       coordinates: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
-      onMap: PropTypes.bool.isRequired,
+      onMap: PropTypes.bool.isRequired
     }).isRequired,
     ymaps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     mapInstance: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     addPlacemark: PropTypes.func.isRequired,
-    updatePlacemark: PropTypes.func.isRequired,
+    updatePlacemark: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     const { mapInstance } = this.props;
 
-    if (mapInstance) {
-      const placemark = this.createPlacemark();
-      this.addOnMap(placemark);
-      this.updatePlacemarkOnDragend(placemark);
-      this.showBaloonOnClick(placemark);
-    }
+    const placemark = this.createPlacemark();
+    this.addOnMap(placemark);
+    this.updatePlacemarkOnDragend(placemark);
+    this.showBaloonOnClick(placemark);
   }
 
   componentWillUnmount() {
@@ -49,12 +47,12 @@ class Placemark extends Component {
       {},
       {
         draggable: true,
-        preset: 'islands#whiteStretchyIcon',
-      },
+        preset: 'islands#whiteStretchyIcon'
+      }
     );
   };
 
-  addOnMap = (placemark) => {
+  addOnMap = placemark => {
     const { mapInstance, marker, addPlacemark } = this.props;
     this.setState({ placemark });
 
@@ -63,20 +61,20 @@ class Placemark extends Component {
     addPlacemark(marker.id);
   };
 
-  updatePlacemarkOnDragend = (placemark) => {
+  updatePlacemarkOnDragend = placemark => {
     const { marker, updatePlacemark } = this.props;
 
-    placemark.events.add('dragend', (e) => {
+    placemark.events.add('dragend', e => {
       const thisPlacemark = e.get('target');
       const newCoordinates = thisPlacemark.geometry.getCoordinates();
       updatePlacemark(marker.id, newCoordinates);
     });
   };
 
-  showBaloonOnClick = (placemark) => {
+  showBaloonOnClick = placemark => {
     const { marker } = this.props;
 
-    placemark.events.add('click', (e) => {
+    placemark.events.add('click', e => {
       const thisPlacemark = e.get('target');
       thisPlacemark.properties.set('balloonContent', marker.name);
     });
