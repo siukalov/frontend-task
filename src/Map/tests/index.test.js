@@ -1,11 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { CustomMap, mapStateToProps, mapDispatchToProps } from '../Map';
-import preloadedState from '../utils/preloadedState';
-import YmapsStub from '../utils/ymapsStub';
-import loadMaps from '../utils/YandexMaps/loadMaps';
+import { CustomMap, mapStateToProps, mapDispatchToProps } from '../index';
 
-jest.mock('../utils/YandexMaps/loadMaps');
+import YmapsStub from '../../utils/ymapsStub';
+import preloadedState from '../../utils/preloadedState';
+import loadMaps from '../../utils/YandexMaps/loadMaps';
+
+jest.mock('../../utils/YandexMaps/loadMaps');
 
 describe('<Map />', () => {
   let wrapper;
@@ -15,7 +16,7 @@ describe('<Map />', () => {
     center: inititialMapCenter,
     zoom: 16,
     controls: ['zoomControl'],
-    behaviors: ['drag'],
+    behaviors: ['drag']
   };
 
   const ymaps = new YmapsStub();
@@ -28,7 +29,10 @@ describe('<Map />', () => {
         height: '100vh',
         setCenter: jest.fn(),
         center: inititialMapCenter,
-        settings,
+        addPlacemark: jest.fn(),
+        updatePlacemark: jest.fn(),
+        markers: [],
+        settings
       };
 
       wrapper = mount(<CustomMap {...props} />);
@@ -51,7 +55,10 @@ describe('<Map />', () => {
         height: '100vh',
         setCenter: jest.fn(),
         center: coordinates,
-        settings,
+        addPlacemark: jest.fn(),
+        updatePlacemark: jest.fn(),
+        markers: preloadedState.markers,
+        settings
       };
 
       wrapper = mount(<CustomMap {...props} />);
@@ -62,11 +69,36 @@ describe('<Map />', () => {
       expect(props.setCenter).toHaveBeenCalled();
     });
 
-    it('should do mapDispatchToProps', () => {
+    it('should do mapDispatchToProps for setCenter', () => {
       expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('setCenter');
 
       mapDispatchToProps(dispatchSpy).setCenter(coordinates);
-      expect(dispatchSpy).toHaveBeenCalledWith({ type: 'SAVE_MAP_CENTER', center: coordinates });
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: 'SAVE_MAP_CENTER',
+        center: coordinates
+      });
+    });
+
+    it('should do mapDispatchToProps for addPlacemark', () => {
+      expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('addPlacemark');
+
+      mapDispatchToProps(dispatchSpy).addPlacemark(0);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: 'ADD_PLACEMARK',
+        onMap: true,
+        id: 0
+      });
+    });
+
+    it('should do mapDispatchToProps for updatePlacemark', () => {
+      expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('updatePlacemark');
+
+      mapDispatchToProps(dispatchSpy).updatePlacemark(0, [33, 33]);
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: 'UPDATE_MARKER_COORDS',
+        coordinates: [33, 33],
+        id: 0
+      });
     });
 
     it('should do mapStateToProps for center and markers props', () => {

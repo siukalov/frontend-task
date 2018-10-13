@@ -15,6 +15,12 @@
   "rules": {
     "react/jsx-filename-extension": "off",
     "import/no-named-as-default": 0,
-    "no-return-assign": ["error", "except-parens"]
+    "no-return-assign": ["error", "except-parens"],
+    "max-len": [
+      "warning",
+      {
+        "code": 120
+      }
+    ]
   }
 }

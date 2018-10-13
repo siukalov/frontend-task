@@ -1,5 +1,10 @@
 import {
-  ADD_MARKER, REMOVE_MARKER, REORDER_MARKERS, SAVE_MAP_CENTER,
+  ADD_MARKER,
+  REMOVE_MARKER,
+  REORDER_MARKERS,
+  SAVE_MAP_CENTER,
+  ADD_PLACEMARK,
+  UPDATE_MARKER_COORDS,
 } from './actionTypes';
 
 const createCounter = () => {
@@ -32,4 +37,16 @@ export const reorderMarkers = (oldIndex, newIndex) => ({
 export const saveCenter = center => ({
   type: SAVE_MAP_CENTER,
   center,
+});
+
+export const updateMarkerCoords = (id, coordinates) => ({
+  type: UPDATE_MARKER_COORDS,
+  id,
+  coordinates,
+});
+
+export const addPlacemark = id => ({
+  type: ADD_PLACEMARK,
+  onMap: true,
+  id,
 });

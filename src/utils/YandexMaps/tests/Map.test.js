@@ -13,6 +13,7 @@ describe('Map', () => {
     controls: ['zoomControl'],
     behaviors: ['drag'],
   };
+
   const defualtProps = {
     width: '100%',
     height: '100vh',

@@ -1,0 +1,49 @@
+import React from 'react';
+import isEqual from 'lodash/isEqual';
+import { connect } from 'react-redux';
+import Ymaps from '../utils/YandexMaps/Ymaps';
+import Map from '../utils/YandexMaps/Map';
+import Placemark from '../utils/YandexMaps/Placemark';
+import { saveCenter, addPlacemark, updateMarkerCoords } from '../actions';
+
+const captureMapUpdate = (props, state) => {
+  const { mapInstance } = state;
+  const { center, setCenter } = props;
+
+  const currentCenter = mapInstance.getCenter();
+
+  if (!isEqual(center, currentCenter)) {
+    setCenter(currentCenter);
+  }
+};
+
+const CustomMap = (props) => {
+  const { markers } = props;
+
+  return (
+    <Ymaps>
+      <Map width="100%" height="100vh" {...props} captureMapUpdateCallback={captureMapUpdate}>
+        {markers.map(marker => (
+          <Placemark {...props} key={marker.id} marker={marker} />
+        ))}
+      </Map>
+    </Ymaps>
+  );
+};
+
+const mapStateToProps = state => ({
+  ...state,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setCenter: coordinates => dispatch(saveCenter(coordinates)),
+  addPlacemark: id => dispatch(addPlacemark(id)),
+  updatePlacemark: (id, coordinates) => dispatch(updateMarkerCoords(id, coordinates)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CustomMap);
+
+export { CustomMap, mapStateToProps, mapDispatchToProps };
