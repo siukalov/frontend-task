@@ -27,7 +27,6 @@ class Placemark extends Component {
     const placemark = this.createPlacemark();
     this.addOnMap(placemark);
     this.updatePlacemarkOnDragend(placemark);
-    this.showBaloonOnClick(placemark);
   }
 
   componentWillUnmount() {
@@ -42,10 +41,13 @@ class Placemark extends Component {
 
     return new ymaps.Placemark(
       marker.coordinates,
-      {},
+      {
+        balloonContent: marker.name,
+      },
       {
         draggable: true,
-        preset: 'islands#whiteStretchyIcon',
+        hasBalloon: true,
+        preset: 'islands#blueIcon',
       },
     );
   };
@@ -66,15 +68,6 @@ class Placemark extends Component {
       const thisPlacemark = e.get('target');
       const newCoordinates = thisPlacemark.geometry.getCoordinates();
       updatePlacemark(marker.id, newCoordinates);
-    });
-  };
-
-  showBaloonOnClick = (placemark) => {
-    const { marker } = this.props;
-
-    placemark.events.add('click', (e) => {
-      const thisPlacemark = e.get('target');
-      thisPlacemark.properties.set('balloonContent', marker.name);
     });
   };
 

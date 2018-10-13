@@ -53,16 +53,4 @@ describe('Placemark', () => {
 
     expect(updatePlacemark).toHaveBeenCalled();
   });
-
-  it('should call updatePlacemark on dragend', () => {
-    const showBallon = jest.fn();
-    const event = {
-      get: jest.fn(() => ({ properties: { set: showBallon } })),
-    };
-
-    const wrapper = mount(<Placemark {...defualtProps} />);
-    wrapper.state('placemark').click(event);
-
-    expect(showBallon).toHaveBeenCalled();
-  });
 });
