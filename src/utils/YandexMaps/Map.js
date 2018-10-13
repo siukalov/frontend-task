@@ -6,7 +6,7 @@ class Map extends Component {
   static defaultProps = {
     children: undefined,
     ymaps: undefined,
-    captureMapUpdateCallback: undefined
+    captureMapUpdateCallback: undefined,
   };
 
   static propTypes = {
@@ -15,10 +15,7 @@ class Map extends Component {
     settings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     ymaps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     captureMapUpdateCallback: PropTypes.func,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ])
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   };
 
   state = { mapInstance: null };
@@ -39,23 +36,20 @@ class Map extends Component {
         captureMapUpdateCallback(this.props, { mapInstance });
 
         // pass Map data to React when the Map has been updated
-        mapInstance.events.add('actionend', () =>
-          captureMapUpdateCallback(this.props, this.state)
-        );
+        mapInstance.events.add('actionend', () => captureMapUpdateCallback(this.props, this.state));
       }
     });
   }
 
   render() {
-    const { width, height, children, ymaps } = this.props;
+    const {
+      width, height, children, ymaps,
+    } = this.props;
     const { mapInstance } = this.state;
 
     return (
       <div style={{ width, height }} ref={this.mapParentNode}>
-        {mapInstance &&
-          React.Children.map(children, child =>
-            React.cloneElement(child, { ymaps, mapInstance })
-          )}
+        {mapInstance && React.Children.map(children, child => React.cloneElement(child, { ymaps, mapInstance }))}
       </div>
     );
   }

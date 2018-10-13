@@ -17,7 +17,7 @@
     "import/no-named-as-default": 0,
     "no-return-assign": ["error", "except-parens"],
     "max-len": [
-      "warning",
+      1,
       {
         "code": 120
       }

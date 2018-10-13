@@ -16,7 +16,7 @@ describe('<Map />', () => {
     center: inititialMapCenter,
     zoom: 16,
     controls: ['zoomControl'],
-    behaviors: ['drag']
+    behaviors: ['drag'],
   };
 
   const ymaps = new YmapsStub();
@@ -32,7 +32,7 @@ describe('<Map />', () => {
         addPlacemark: jest.fn(),
         updatePlacemark: jest.fn(),
         markers: [],
-        settings
+        settings,
       };
 
       wrapper = mount(<CustomMap {...props} />);
@@ -58,7 +58,7 @@ describe('<Map />', () => {
         addPlacemark: jest.fn(),
         updatePlacemark: jest.fn(),
         markers: preloadedState.markers,
-        settings
+        settings,
       };
 
       wrapper = mount(<CustomMap {...props} />);
@@ -75,7 +75,7 @@ describe('<Map />', () => {
       mapDispatchToProps(dispatchSpy).setCenter(coordinates);
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: 'SAVE_MAP_CENTER',
-        center: coordinates
+        center: coordinates,
       });
     });
 
@@ -86,7 +86,7 @@ describe('<Map />', () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: 'ADD_PLACEMARK',
         onMap: true,
-        id: 0
+        id: 0,
       });
     });
 
@@ -97,7 +97,7 @@ describe('<Map />', () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: 'UPDATE_MARKER_COORDS',
         coordinates: [33, 33],
-        id: 0
+        id: 0,
       });
     });
 

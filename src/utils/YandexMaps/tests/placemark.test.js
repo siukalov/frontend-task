@@ -12,7 +12,7 @@ describe('Placemark', () => {
     center: [55.76, 37.64],
     zoom: 16,
     controls: ['zoomControl'],
-    behaviors: ['drag']
+    behaviors: ['drag'],
   };
 
   const mapInstance = new ymaps.Map('div', settings);
@@ -22,12 +22,12 @@ describe('Placemark', () => {
       id: 0,
       name: 'Home',
       coordinates: [55, 38],
-      onMap: false
+      onMap: false,
     },
     ymaps,
     mapInstance,
     addPlacemark,
-    updatePlacemark
+    updatePlacemark,
   };
 
   it('should create Placemark', () => {
@@ -45,7 +45,7 @@ describe('Placemark', () => {
 
   it('should call updatePlacemark on dragend', () => {
     const event = {
-      get: jest.fn(() => ({ geometry: { getCoordinates: jest.fn() } }))
+      get: jest.fn(() => ({ geometry: { getCoordinates: jest.fn() } })),
     };
 
     const wrapper = mount(<Placemark {...defualtProps} />);
@@ -57,7 +57,7 @@ describe('Placemark', () => {
   it('should call updatePlacemark on dragend', () => {
     const showBallon = jest.fn();
     const event = {
-      get: jest.fn(() => ({ properties: { set: showBallon } }))
+      get: jest.fn(() => ({ properties: { set: showBallon } })),
     };
 
     const wrapper = mount(<Placemark {...defualtProps} />);
