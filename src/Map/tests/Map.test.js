@@ -1,12 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { CustomMap, mapStateToProps, mapDispatchToProps } from '../index';
+import { CustomMap, mapStateToProps, mapDispatchToProps } from '../Map';
 
 import YmapsStub from '../../utils/ymapsStub';
 import preloadedState from '../../utils/preloadedState';
-import loadMaps from '../../utils/YandexMaps/loadMaps';
-
-jest.mock('../../utils/YandexMaps/loadMaps');
 
 describe('<Map />', () => {
   let wrapper;
@@ -20,7 +17,6 @@ describe('<Map />', () => {
   };
 
   const ymaps = new YmapsStub();
-  loadMaps.mockReturnValue(Promise.resolve(ymaps));
 
   describe('Rendering', () => {
     beforeAll(() => {
@@ -33,6 +29,7 @@ describe('<Map />', () => {
         updatePlacemark: jest.fn(),
         markers: [],
         settings,
+        ymaps,
       };
 
       wrapper = mount(<CustomMap {...props} />);
@@ -59,6 +56,7 @@ describe('<Map />', () => {
         updatePlacemark: jest.fn(),
         markers: preloadedState.markers,
         settings,
+        ymaps,
       };
 
       wrapper = mount(<CustomMap {...props} />);

@@ -14,14 +14,7 @@ const App = () => (
     </Aside>
     <LayoutPositioned>
       <Content>
-        <Map
-          settings={{
-            center: [55.76, 37.64],
-            zoom: 16,
-            controls: ['zoomControl'],
-            behaviors: ['drag'],
-          }}
-        />
+        <Map />
       </Content>
     </LayoutPositioned>
   </Layout>
