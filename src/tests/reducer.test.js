@@ -134,9 +134,7 @@ describe('Reducer', () => {
         },
       ],
     };
-    expect(reducer(state, actions.reorderMarkers(oldIndex, newIndex))).toEqual(
-      nextState,
-    );
+    expect(reducer(state, actions.reorderMarkers(oldIndex, newIndex))).toEqual(nextState);
   });
 
   it('should handle SAVE_MAP_CENTER', () => {
@@ -193,6 +191,12 @@ describe('Reducer', () => {
           coordinates: [55, 38],
           onMap: true,
         },
+        {
+          id: 1,
+          name: 'Work',
+          coordinates: [52, 28],
+          onMap: true,
+        },
       ],
     });
 
@@ -207,11 +211,15 @@ describe('Reducer', () => {
           coordinates: newCoordinates,
           onMap: true,
         },
+        {
+          id: 1,
+          name: 'Work',
+          coordinates: [52, 28],
+          onMap: true,
+        },
       ],
     });
 
-    expect(
-      reducer(state, actions.updateMarkerCoords(0, newCoordinates)),
-    ).toEqual(nextState);
+    expect(reducer(state, actions.updateMarkerCoords(0, newCoordinates))).toEqual(nextState);
   });
 });

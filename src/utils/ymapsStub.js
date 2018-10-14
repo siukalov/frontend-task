@@ -17,8 +17,16 @@ function Placemark(coordinates) {
   this.events = { add: jest.fn(addEvent) };
 }
 
+function LineString() {}
+
+function Polyline() {
+  this.geometry = { getCoordinates: jest.fn(), setCoordinates: jest.fn() };
+}
+
 export default function YmapsStub() {
   this.ready = jest.fn(callback => callback());
   this.Map = Map;
+  this.Polyline = Polyline;
   this.Placemark = Placemark;
+  this.geometry = { LineString };
 }

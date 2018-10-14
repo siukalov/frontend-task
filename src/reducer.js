@@ -15,7 +15,13 @@ const initialState = Immutable({
   markers: [],
 });
 
-const updateMarker = (action, field) => marker => ({ ...marker, [field]: action[field] });
+const updateMarker = (action, field) => (marker) => {
+  if (marker.id === action.id) {
+    return { ...marker, [field]: action[field] };
+  }
+
+  return marker;
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {

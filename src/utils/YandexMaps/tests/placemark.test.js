@@ -7,6 +7,7 @@ describe('Placemark', () => {
   const ymaps = new YmapsStub();
   const addPlacemark = jest.fn();
   const updatePlacemark = jest.fn();
+  const mapDidUpdate = jest.fn();
 
   const settings = {
     center: [55.76, 37.64],
@@ -15,7 +16,7 @@ describe('Placemark', () => {
     behaviors: ['drag'],
   };
 
-  const mapInstance = new ymaps.Map('div', settings);
+  const instance = new ymaps.Map('div', settings);
 
   const defualtProps = {
     marker: {
@@ -25,9 +26,10 @@ describe('Placemark', () => {
       onMap: false,
     },
     ymaps,
-    mapInstance,
+    instance,
     addPlacemark,
     updatePlacemark,
+    mapDidUpdate,
   };
 
   it('should create Placemark', () => {
@@ -36,7 +38,7 @@ describe('Placemark', () => {
   });
 
   it('should remove Placemark on unmounting', () => {
-    const removeGeoObject = mapInstance.geoObjects.remove;
+    const removeGeoObject = instance.geoObjects.remove;
     const wrapper = mount(<Placemark {...defualtProps} />);
     wrapper.instance().componentWillUnmount();
 

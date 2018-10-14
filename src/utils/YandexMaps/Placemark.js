@@ -2,12 +2,12 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Placemark extends Component {
-  state = { placemark: null };
+  state = { placemark: null }; // TODO: remove state
 
   // see https://github.com/facebook/react/issues/6653
   static defaultProps = {
     ymaps: undefined,
-    mapInstance: undefined,
+    instance: undefined,
   };
 
   static propTypes = {
@@ -18,7 +18,7 @@ class Placemark extends Component {
       onMap: PropTypes.bool.isRequired,
     }).isRequired,
     ymaps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    mapInstance: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    instance: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     addPlacemark: PropTypes.func.isRequired,
     updatePlacemark: PropTypes.func.isRequired,
   };
@@ -31,9 +31,9 @@ class Placemark extends Component {
 
   componentWillUnmount() {
     const { placemark } = this.state;
-    const { mapInstance } = this.props;
+    const { instance } = this.props;
 
-    mapInstance.geoObjects.remove(placemark);
+    instance.geoObjects.remove(placemark);
   }
 
   createPlacemark = () => {
@@ -53,11 +53,11 @@ class Placemark extends Component {
   };
 
   addOnMap = (placemark) => {
-    const { mapInstance, marker, addPlacemark } = this.props;
+    const { instance, marker, addPlacemark } = this.props;
     this.setState({ placemark });
 
     // add placemark on the Map
-    mapInstance.geoObjects.add(placemark);
+    instance.geoObjects.add(placemark);
     addPlacemark(marker.id);
   };
 

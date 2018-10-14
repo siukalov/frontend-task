@@ -6,14 +6,24 @@ import Map from '../utils/YandexMaps/Map';
 import Placemark from '../utils/YandexMaps/Placemark';
 import { saveCenter, addPlacemark, updateMarkerCoords } from '../actions';
 
-const captureMapUpdate = (props, state) => {
-  const { mapInstance } = state;
-  const { center, setCenter } = props;
+const captureMapUpdate = (props, map) => {
+  const { instance, route } = map;
 
-  const currentCenter = mapInstance.getCenter();
+  const {
+    markers, center, setCenter, ymaps,
+  } = props;
+
+  const currentCenter = instance.getCenter();
 
   if (!isEqual(center, currentCenter)) {
     setCenter(currentCenter);
+  }
+
+  const coordinates = markers.map(marker => marker.coordinates);
+
+  // TODO: refactor
+  if (!isEqual(route.geometry.getCoordinates(), coordinates)) {
+    route.geometry.setCoordinates(coordinates);
   }
 };
 
