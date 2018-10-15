@@ -1,43 +1,70 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
-import Ymaps from '../utils/YandexMaps/Ymaps';
 import Map from '../utils/YandexMaps/Map';
-import Placemark from '../utils/YandexMaps/Placemark';
-import { saveCenter, addPlacemark, updateMarkerCoords } from '../actions';
+import Route from './Route';
+import { saveCenter, addMarkerOnMap, updateMarkerCoords } from '../actions';
 
-const captureMapUpdate = (props, map) => {
-  const { instance, route } = map;
+class CustomMap extends Component {
+  state = { instance: null };
 
-  const {
-    markers, center, setCenter, ymaps,
-  } = props;
+  static propTypes = {
+    ymaps: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    settings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    setCenter: PropTypes.func.isRequired,
+    addPlacemark: PropTypes.func.isRequired,
+    updatePlacemark: PropTypes.func.isRequired,
+    center: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    markers: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        coordinates: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+        onMap: PropTypes.bool.isRequired,
+      }),
+    ).isRequired,
+  };
 
-  const currentCenter = instance.getCenter();
+  captureMapUpdate = (instance) => {
+    const { center, setCenter } = this.props;
+    const currentCenter = instance.getCenter();
 
-  if (!isEqual(center, currentCenter)) {
-    setCenter(currentCenter);
+    if (!isEqual(center, currentCenter)) {
+      setCenter(currentCenter);
+    }
+  };
+
+  getMapInstance = instance => this.setState({ instance });
+
+  render() {
+    const {
+      ymaps, markers, settings, addPlacemark, updatePlacemark,
+    } = this.props;
+    const { instance } = this.state;
+
+    return (
+      <Map
+        width="100%"
+        height="100vh"
+        settings={settings}
+        ymaps={ymaps}
+        getMapInstance={this.getMapInstance}
+        captureMapUpdate={this.captureMapUpdate}
+      >
+        {instance && (
+          <Route
+            ymaps={ymaps}
+            instance={instance}
+            markers={markers}
+            addPlacemark={addPlacemark}
+            updatePlacemark={updatePlacemark}
+          />
+        )}
+      </Map>
+    );
   }
-
-  const coordinates = markers.map(marker => marker.coordinates);
-
-  // TODO: refactor
-  if (!isEqual(route.geometry.getCoordinates(), coordinates)) {
-    route.geometry.setCoordinates(coordinates);
-  }
-};
-
-const CustomMap = (props) => {
-  const { markers } = props;
-
-  return (
-    <Map width="100%" height="100vh" {...props} captureMapUpdateCallback={captureMapUpdate}>
-      {markers.map(marker => (
-        <Placemark {...props} key={marker.id} marker={marker} />
-      ))}
-    </Map>
-  );
-};
+}
 
 const mapStateToProps = state => ({
   ...state,
@@ -45,7 +72,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setCenter: coordinates => dispatch(saveCenter(coordinates)),
-  addPlacemark: id => dispatch(addPlacemark(id)),
+  addPlacemark: id => dispatch(addMarkerOnMap(id)),
   updatePlacemark: (id, coordinates) => dispatch(updateMarkerCoords(id, coordinates)),
 });
 

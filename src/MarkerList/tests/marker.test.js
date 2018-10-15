@@ -7,7 +7,7 @@ describe('<Marker />', () => {
   let wrapper;
   const onRemoveSpy = jest.fn();
 
-  describe('Rendering', () => {
+  describe('Render', () => {
     beforeAll(() => {
       wrapper = mount(<Marker onRemove={onRemoveSpy} name="Home" id={0} />);
     });
@@ -21,7 +21,7 @@ describe('<Marker />', () => {
     });
   });
 
-  describe('Interaction', () => {
+  describe('Behavior', () => {
     beforeAll(() => {
       wrapper = mount(<Marker onRemove={onRemoveSpy} name="Home" id={0} />);
     });

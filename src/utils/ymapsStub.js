@@ -1,26 +1,30 @@
+function addEvent(eventName, eventFunc) {
+  this[eventName] = eventFunc;
+}
+
 function Map(node, settings) {
   const addGeoObject = jest.fn();
   const removeGeoObject = jest.fn();
-  const addEvent = (eventName, eventFunc) => (this[eventName] = eventFunc);
 
   this.node = node;
   this.settings = settings;
 
   this.getCenter = jest.fn(() => this.settings.center);
-  this.events = { add: jest.fn(addEvent) };
+  this.events = { add: jest.fn(addEvent.bind(this)) };
   this.geoObjects = { add: addGeoObject, remove: removeGeoObject };
 }
 
 function Placemark(coordinates) {
-  const addEvent = (eventName, eventFunc) => (this[eventName] = eventFunc);
   this.coordinates = coordinates;
-  this.events = { add: jest.fn(addEvent) };
+  this.events = { add: jest.fn(addEvent.bind(this)) };
 }
 
-function LineString() {}
-
 function Polyline() {
-  this.geometry = { getCoordinates: jest.fn(), setCoordinates: jest.fn() };
+  this.coordinates = [];
+
+  this.geometry = {
+    setCoordinates: jest.fn(coordinates => (this.coordinates = coordinates)),
+  };
 }
 
 export default function YmapsStub() {
@@ -28,5 +32,4 @@ export default function YmapsStub() {
   this.Map = Map;
   this.Polyline = Polyline;
   this.Placemark = Placemark;
-  this.geometry = { LineString };
 }

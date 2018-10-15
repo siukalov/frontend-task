@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Placemark extends Component {
-  state = { placemark: null }; // TODO: remove state
+  state = { placemark: null };
 
   // see https://github.com/facebook/react/issues/6653
   static defaultProps = {

@@ -18,7 +18,7 @@ describe('<Map />', () => {
 
   const ymaps = new YmapsStub();
 
-  describe('Rendering', () => {
+  describe('Render', () => {
     beforeAll(() => {
       const props = {
         width: '100%',
@@ -41,7 +41,7 @@ describe('<Map />', () => {
     });
   });
 
-  describe('Interaction', () => {
+  describe('Behavior', () => {
     const dispatchSpy = jest.fn();
     const coordinates = [55.76, 37.64];
     let props;

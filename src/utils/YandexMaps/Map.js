@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
 
 class Map extends Component {
   // see https://github.com/facebook/react/issues/6653
   static defaultProps = {
     children: undefined,
     ymaps: undefined,
-    captureMapUpdateCallback: undefined,
   };
 
   static propTypes = {
@@ -15,7 +13,8 @@ class Map extends Component {
     height: PropTypes.string.isRequired,
     settings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     ymaps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    captureMapUpdateCallback: PropTypes.func,
+    getMapInstance: PropTypes.func.isRequired,
+    captureMapUpdate: PropTypes.func.isRequired,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   };
 
@@ -23,54 +22,28 @@ class Map extends Component {
 
   instance = null;
 
-  route = null;
-
   componentDidMount() {
-    const { ymaps, settings, captureMapUpdateCallback } = this.props;
+    const {
+      ymaps, settings, getMapInstance, captureMapUpdate,
+    } = this.props;
 
     ymaps.ready(() => {
       this.instance = new ymaps.Map(this.mapParentNode.current, settings);
-      this.route = new ymaps.Polyline(
-        [],
-        {},
-        {
-          strokeColor: '#000000',
-          strokeWidth: 4,
-          strokeStyle: '1 3',
-        },
-      );
+      // pass Map to React when it has been initialized
+      captureMapUpdate(this.instance);
 
-      this.instance.geoObjects.add(this.route);
-
-      if (captureMapUpdateCallback) {
-        const map = { instance: this.instance, route: this.route };
-
-        // pass Map data to React when the Map has been initialized
-        captureMapUpdateCallback(this.props, map);
-
-        // pass Map data to React when the Map has been updated
-        this.instance.events.add('actionend', () => captureMapUpdateCallback(this.props, map));
-      }
+      // pass Map to React data when it has been updated
+      this.instance.events.add('actionend', () => captureMapUpdate(this.instance));
+      getMapInstance(this.instance); // TODO: rename
     });
   }
 
-  componentDidUpdate(prevProps) {
-    const { captureMapUpdateCallback, markers } = this.props;
-    if (!isEqual(prevProps.markers, markers)) {
-      const map = { instance: this.instance, route: this.route };
-      captureMapUpdateCallback(this.props, map);
-    }
-  }
-
   render() {
-    const {
-      width, height, children, ymaps,
-    } = this.props;
+    const { width, height, children } = this.props;
 
     return (
       <div style={{ width, height }} ref={this.mapParentNode}>
-        {this.instance
-          && React.Children.map(children, child => React.cloneElement(child, { ymaps, instance: this.instance }))}
+        {children}
       </div>
     );
   }

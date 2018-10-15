@@ -45,7 +45,7 @@ export const updateMarkerCoords = (id, coordinates) => ({
   coordinates,
 });
 
-export const addPlacemark = id => ({
+export const addMarkerOnMap = id => ({
   type: ADD_PLACEMARK,
   onMap: true,
   id,

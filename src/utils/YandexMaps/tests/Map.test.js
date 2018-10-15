@@ -4,7 +4,6 @@ import Map from '../Map';
 import YmapsStub from '../../ymapsStub';
 
 describe('Map', () => {
-  let wrapper;
   const ymaps = new YmapsStub();
 
   const settings = {
@@ -19,48 +18,35 @@ describe('Map', () => {
     height: '100vh',
     settings,
     ymaps,
+    getMapInstance: jest.fn(),
   };
 
-  it('should create mapInstance', () => {
-    wrapper = mount(<Map {...defualtProps} />);
+  it('should create map instance', () => {
+    const getMapInstance = jest.fn();
+    const captureMapUpdate = jest.fn();
+    const spy = jest.spyOn(ymaps, 'Map');
+    mount(<Map {...defualtProps} getMapInstance={getMapInstance} captureMapUpdate={captureMapUpdate} />);
 
-    expect(wrapper.instance().instance).toEqual(expect.any(Object));
+    expect(getMapInstance).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalled();
   });
 
-  it('should call map events handlers', () => {
-    const captureMapUpdateCallback = jest.fn();
+  it('should call captureMapUpdate', () => {
+    const captureMapUpdate = jest.fn();
+    const getMapInstance = jest.fn();
+    mount(<Map {...defualtProps} getMapInstance={getMapInstance} captureMapUpdate={captureMapUpdate} />);
 
-    wrapper = mount(<Map {...defualtProps} captureMapUpdateCallback={captureMapUpdateCallback} />);
+    expect(captureMapUpdate).toHaveBeenCalled();
+  });
+
+  it('should call captureMapUpdate on Map actionend', () => {
+    const captureMapUpdate = jest.fn();
+    const getMapInstance = jest.fn();
+    const wrapper = mount(
+      <Map {...defualtProps} getMapInstance={getMapInstance} captureMapUpdate={captureMapUpdate} />,
+    );
+
     wrapper.instance().instance.actionend();
-
-    expect(captureMapUpdateCallback).toHaveBeenCalled();
+    expect(captureMapUpdate).toHaveBeenCalledTimes(2);
   });
-
-  it('should call captureMapUpdateCallback when given', () => {
-    const captureMapUpdateCallback = jest.fn();
-    const props = {
-      ...defualtProps,
-      captureMapUpdateCallback,
-    };
-
-    wrapper = mount(<Map {...props} />);
-    expect(captureMapUpdateCallback).toHaveBeenCalled();
-  });
-
-  // it('should pass ymaps and mapInstance to its children', () => {
-  //   const MapChildElement = () => <div />;
-
-  //   wrapper = mount(
-  //     <Map {...defualtProps}>
-  //       <MapChildElement id="child1" />
-  //       <MapChildElement id="child2" />
-  //     </Map>,
-  //   );
-
-  //   expect(wrapper.find(MapChildElement).map(node => node.prop('ymaps'))).toEqual([ymaps, ymaps]);
-  //   expect(wrapper.find(MapChildElement).map(node => node.prop('mapInstance'))).toEqual([
-  //     expect.any(Object),
-  //     expect.any(Object),
-  //   ]);
-  // });
 });

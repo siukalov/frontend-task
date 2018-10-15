@@ -6,7 +6,7 @@ import { Input, Button } from '../Styled';
 describe('<AddMarker />', () => {
   let wrapper;
 
-  describe('Rendering', () => {
+  describe('Render', () => {
     beforeAll(() => {
       wrapper = mount(<AddMarkerForm addMarker={jest.fn()} />);
     });
@@ -21,7 +21,7 @@ describe('<AddMarker />', () => {
     });
   });
 
-  describe('Interaction', () => {
+  describe('Behavior', () => {
     const addMarkerSpy = jest.fn();
     const dispatchSpy = jest.fn();
 

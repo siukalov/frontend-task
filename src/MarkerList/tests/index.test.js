@@ -9,7 +9,7 @@ describe('<MarkerList />', () => {
   const handleRemoveSpy = jest.fn();
   const { markers } = preloadedState;
 
-  describe('Rendering', () => {
+  describe('Render', () => {
     beforeAll(() => {
       wrapper = mount(<MarkerList handleRemove={handleRemoveSpy} markers={markers} />);
     });
@@ -19,7 +19,7 @@ describe('<MarkerList />', () => {
     });
   });
 
-  describe('Interaction', () => {
+  describe('Behavior', () => {
     let dispatchSpy = jest.fn();
 
     beforeEach(() => {

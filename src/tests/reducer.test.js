@@ -178,7 +178,7 @@ describe('Reducer', () => {
       ],
     });
 
-    expect(reducer(state, actions.addPlacemark(0))).toEqual(nextState);
+    expect(reducer(state, actions.addMarkerOnMap(0))).toEqual(nextState);
   });
 
   it('should handle UPDATE_MARKER_COORDS', () => {
