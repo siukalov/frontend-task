@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isUndefined from 'lodash/isUndefined';
+import { Form, Button, Input } from 'antd';
 import {
-  Input, Form, FormInput, FormItem, Button, MarkerForm,
+  FormInput, FormItem, MarkerForm,
 } from './Styled';
-
 
 const fieldDecoratorRules = {
   rules: [{ required: true, min: 1, message: 'Please input a marker name' }],

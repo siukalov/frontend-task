@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { Button, Input } from 'antd';
 import { AddMarkerForm, mapDispatchToProps } from '../index';
-import { Input, Button } from '../Styled';
 
 describe('<AddMarker />', () => {
   let wrapper;
@@ -22,14 +22,16 @@ describe('<AddMarker />', () => {
   });
 
   describe('Behavior', () => {
-    const addMarkerSpy = jest.fn();
-    const dispatchSpy = jest.fn();
+    let addMarkerSpy;
+    let dispatchSpy;
 
-    beforeAll(() => {
+    beforeEach(() => {
+      addMarkerSpy = jest.fn();
+      dispatchSpy = jest.fn();
       wrapper = mount(<AddMarkerForm addMarker={addMarkerSpy} />);
     });
 
-    it('should call addMarker with a marker name', () => {
+    it('should call addMarker with a marker name on submit', () => {
       wrapper.find(Input).simulate('change', { target: { value: 'Home' } });
       wrapper.find(Input).simulate('submit');
       expect(addMarkerSpy).toHaveBeenCalledWith('Home');

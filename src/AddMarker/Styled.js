@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import { Form, Button, Input } from 'antd';
-
-export { Form, Button, Input };
+import { Form } from 'antd';
 
 export const FormItem = Form.Item;
 
