@@ -46,12 +46,12 @@ describe('Placemark', () => {
     expect(map.geoObjects.remove).toHaveBeenCalled();
   });
 
-  it('should call updatePlacemark on dragend', () => {
+  it('should call updatePlacemark on drag', () => {
     const event = {
       get: jest.fn(() => ({ geometry: { getCoordinates: jest.fn() } })),
     };
 
-    wrapper.state('placemark').dragend(event);
+    wrapper.state('placemark').drag(event);
 
     expect(wrapper.props().updatePlacemark).toHaveBeenCalled();
   });

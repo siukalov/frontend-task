@@ -9,13 +9,17 @@ import { saveCenter, addMarkerOnMap, updateMarkerCoords } from '../actions';
 class CustomMap extends Component {
   state = { map: null };
 
+  static defaultProps = {
+    center: null,
+  };
+
   static propTypes = {
     ymaps: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     settings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     setCenter: PropTypes.func.isRequired,
     addPlacemark: PropTypes.func.isRequired,
     updatePlacemark: PropTypes.func.isRequired,
-    center: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    center: PropTypes.arrayOf(PropTypes.number.isRequired),
     markers: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,

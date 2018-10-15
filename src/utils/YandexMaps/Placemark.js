@@ -20,7 +20,7 @@ class Placemark extends Component {
   componentDidMount() {
     const placemark = this.createPlacemark();
     this.addOnMap(placemark);
-    this.updatePlacemarkOnDragend(placemark);
+    this.updatePlacemarkOndrag(placemark);
   }
 
   componentWillUnmount() {
@@ -54,10 +54,10 @@ class Placemark extends Component {
     addPlacemark(marker.id);
   };
 
-  updatePlacemarkOnDragend = (placemark) => {
+  updatePlacemarkOndrag = (placemark) => {
     const { marker, updatePlacemark } = this.props;
 
-    placemark.events.add('dragend', (e) => {
+    placemark.events.add('drag', (e) => {
       const thisPlacemark = e.get('target');
       const newCoordinates = thisPlacemark.geometry.getCoordinates();
       updatePlacemark(marker.id, newCoordinates);
