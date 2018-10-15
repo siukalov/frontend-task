@@ -4,15 +4,9 @@ import PropTypes from 'prop-types';
 class Placemark extends Component {
   state = { placemark: null };
 
-  // see https://github.com/facebook/react/issues/6653
-  static defaultProps = {
-    ymaps: undefined,
-    map: undefined,
-  };
-
   static propTypes = {
-    ymaps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    map: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    ymaps: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    map: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     addPlacemark: PropTypes.func.isRequired,
     updatePlacemark: PropTypes.func.isRequired,
     marker: PropTypes.shape({
@@ -38,18 +32,17 @@ class Placemark extends Component {
 
   createPlacemark = () => {
     const { ymaps, marker } = this.props;
+    const { coordinates } = marker;
+    const styles = {
+      draggable: true,
+      hasBalloon: true,
+      preset: 'islands#blueIcon',
+    };
+    const options = {
+      balloonContent: marker.name,
+    };
 
-    return new ymaps.Placemark(
-      marker.coordinates,
-      {
-        balloonContent: marker.name,
-      },
-      {
-        draggable: true,
-        hasBalloon: true,
-        preset: 'islands#blueIcon',
-      },
-    );
+    return new ymaps.Placemark(coordinates, options, styles);
   };
 
   addOnMap = (placemark) => {
