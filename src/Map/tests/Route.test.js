@@ -17,14 +17,14 @@ describe('<Route />', () => {
     };
 
     const ymaps = new YmapsStub();
-    const instance = new ymaps.Map('div', settings);
+    const map = new ymaps.Map('div', settings);
     const { markers } = preloadedState;
     const addPlacemark = jest.fn();
     const updatePlacemark = jest.fn();
 
     props = {
       ymaps,
-      instance,
+      map,
       markers,
       addPlacemark,
       updatePlacemark,

@@ -8,7 +8,7 @@ class Route extends Component {
 
   static propTypes = {
     ymaps: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    instance: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    map: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     markers: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
@@ -20,7 +20,7 @@ class Route extends Component {
   };
 
   componentDidMount() {
-    const { ymaps, instance } = this.props;
+    const { ymaps, map } = this.props;
     ymaps.ready(() => {
       const route = new ymaps.Polyline(
         [],
@@ -31,7 +31,7 @@ class Route extends Component {
           strokeStyle: '1 3',
         },
       );
-      instance.geoObjects.add(route);
+      map.geoObjects.add(route);
       this.setState({ route });
     });
   }

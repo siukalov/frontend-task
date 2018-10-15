@@ -16,7 +16,7 @@ describe('Placemark', () => {
     behaviors: ['drag'],
   };
 
-  const instance = new ymaps.Map('div', settings);
+  const map = new ymaps.Map('div', settings);
 
   const props = {
     marker: {
@@ -26,7 +26,7 @@ describe('Placemark', () => {
       onMap: false,
     },
     ymaps,
-    instance,
+    map,
     addPlacemark,
     updatePlacemark,
     mapDidUpdate,
@@ -38,7 +38,7 @@ describe('Placemark', () => {
   });
 
   it('should remove Placemark on unmounting', () => {
-    const removeGeoObject = instance.geoObjects.remove;
+    const removeGeoObject = map.geoObjects.remove;
     const wrapper = mount(<Placemark {...props} />);
     wrapper.instance().componentWillUnmount();
 

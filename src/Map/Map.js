@@ -7,7 +7,7 @@ import Route from './Route';
 import { saveCenter, addMarkerOnMap, updateMarkerCoords } from '../actions';
 
 class CustomMap extends Component {
-  state = { instance: null };
+  state = { map: null };
 
   static propTypes = {
     ymaps: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -26,22 +26,22 @@ class CustomMap extends Component {
     ).isRequired,
   };
 
-  captureMapUpdate = (instance) => {
+  captureMapUpdate = (map) => {
     const { center, setCenter } = this.props;
-    const currentCenter = instance.getCenter();
+    const currentCenter = map.getCenter();
 
     if (!isEqual(center, currentCenter)) {
       setCenter(currentCenter);
     }
   };
 
-  saveMapInstance = instance => this.setState({ instance });
+  saveMapInstance = map => this.setState({ map });
 
   render() {
     const {
       ymaps, markers, settings, addPlacemark, updatePlacemark,
     } = this.props;
-    const { instance } = this.state;
+    const { map } = this.state;
 
     return (
       <Map
@@ -52,10 +52,10 @@ class CustomMap extends Component {
         saveMapInstance={this.saveMapInstance}
         captureMapUpdate={this.captureMapUpdate}
       >
-        {instance && (
+        {map && (
           <Route
             ymaps={ymaps}
-            instance={instance}
+            map={map}
             markers={markers}
             addPlacemark={addPlacemark}
             updatePlacemark={updatePlacemark}
