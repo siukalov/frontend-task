@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import throttle from 'lodash/throttle';
 import { connect } from 'react-redux';
 import Map from '../utils/YandexMaps/Map';
 import Route from './Route';
@@ -74,10 +75,15 @@ const mapStateToProps = state => ({
   ...state,
 });
 
+const throttledUpdatePlacemark = throttle(
+  (dispatch, id, coordinates) => dispatch(updateMarkerCoords(id, coordinates)),
+  17,
+);
+
 const mapDispatchToProps = dispatch => ({
   setCenter: coordinates => dispatch(saveCenter(coordinates)),
   addPlacemark: id => dispatch(addMarkerOnMap(id)),
-  updatePlacemark: (id, coordinates) => dispatch(updateMarkerCoords(id, coordinates)),
+  updatePlacemark: (id, coordinates) => throttledUpdatePlacemark(dispatch, id, coordinates),
 });
 
 export default connect(
