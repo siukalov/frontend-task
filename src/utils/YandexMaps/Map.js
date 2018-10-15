@@ -13,7 +13,7 @@ class Map extends Component {
     height: PropTypes.string.isRequired,
     settings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     ymaps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    getMapInstance: PropTypes.func.isRequired,
+    saveMapInstance: PropTypes.func.isRequired,
     captureMapUpdate: PropTypes.func.isRequired,
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   };
@@ -24,7 +24,7 @@ class Map extends Component {
 
   componentDidMount() {
     const {
-      ymaps, settings, getMapInstance, captureMapUpdate,
+      ymaps, settings, saveMapInstance, captureMapUpdate,
     } = this.props;
 
     ymaps.ready(() => {
@@ -34,7 +34,7 @@ class Map extends Component {
 
       // pass Map to React data when it has been updated
       this.instance.events.add('actionend', () => captureMapUpdate(this.instance));
-      getMapInstance(this.instance); // TODO: rename
+      saveMapInstance(this.instance); // TODO: rename
     });
   }
 

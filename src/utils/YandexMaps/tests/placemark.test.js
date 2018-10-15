@@ -18,7 +18,7 @@ describe('Placemark', () => {
 
   const instance = new ymaps.Map('div', settings);
 
-  const defualtProps = {
+  const props = {
     marker: {
       id: 0,
       name: 'Home',
@@ -33,13 +33,13 @@ describe('Placemark', () => {
   };
 
   it('should create Placemark', () => {
-    const wrapper = mount(<Placemark {...defualtProps} />);
+    const wrapper = mount(<Placemark {...props} />);
     expect(wrapper.state('placemark')).toBeTruthy();
   });
 
   it('should remove Placemark on unmounting', () => {
     const removeGeoObject = instance.geoObjects.remove;
-    const wrapper = mount(<Placemark {...defualtProps} />);
+    const wrapper = mount(<Placemark {...props} />);
     wrapper.instance().componentWillUnmount();
 
     expect(removeGeoObject).toHaveBeenCalled();
@@ -50,7 +50,7 @@ describe('Placemark', () => {
       get: jest.fn(() => ({ geometry: { getCoordinates: jest.fn() } })),
     };
 
-    const wrapper = mount(<Placemark {...defualtProps} />);
+    const wrapper = mount(<Placemark {...props} />);
     wrapper.state('placemark').dragend(event);
 
     expect(updatePlacemark).toHaveBeenCalled();

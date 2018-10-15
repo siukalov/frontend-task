@@ -35,7 +35,7 @@ class CustomMap extends Component {
     }
   };
 
-  getMapInstance = instance => this.setState({ instance });
+  saveMapInstance = instance => this.setState({ instance });
 
   render() {
     const {
@@ -49,7 +49,7 @@ class CustomMap extends Component {
         height="100vh"
         settings={settings}
         ymaps={ymaps}
-        getMapInstance={this.getMapInstance}
+        saveMapInstance={this.saveMapInstance}
         captureMapUpdate={this.captureMapUpdate}
       >
         {instance && (
