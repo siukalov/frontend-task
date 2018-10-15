@@ -5,44 +5,45 @@ import YmapsStub from '../../ymapsStub';
 
 describe('Placemark', () => {
   const ymaps = new YmapsStub();
-  const addPlacemark = jest.fn();
-  const updatePlacemark = jest.fn();
-  const mapDidUpdate = jest.fn();
-
   const settings = {
     center: [55.76, 37.64],
     zoom: 16,
     controls: ['zoomControl'],
     behaviors: ['drag'],
   };
-
   const map = new ymaps.Map('div', settings);
 
-  const props = {
-    marker: {
-      id: 0,
-      name: 'Home',
-      coordinates: [55, 38],
-      onMap: false,
-    },
-    ymaps,
-    map,
-    addPlacemark,
-    updatePlacemark,
-    mapDidUpdate,
-  };
+  let wrapper;
 
-  it('should create Placemark', () => {
-    const wrapper = mount(<Placemark {...props} />);
-    expect(wrapper.state('placemark')).toBeTruthy();
+  beforeEach(() => {
+    const addPlacemark = jest.fn();
+    const updatePlacemark = jest.fn();
+    const mapDidUpdate = jest.fn();
+
+    const props = {
+      marker: {
+        id: 0,
+        name: 'Home',
+        coordinates: [55, 38],
+        onMap: false,
+      },
+      ymaps,
+      map,
+      addPlacemark,
+      updatePlacemark,
+      mapDidUpdate,
+    };
+
+    wrapper = mount(<Placemark {...props} />);
+  });
+
+  it('should add Placemark on the Map', () => {
+    expect(map.geoObjects.add).toHaveBeenCalled();
   });
 
   it('should remove Placemark on unmounting', () => {
-    const removeGeoObject = map.geoObjects.remove;
-    const wrapper = mount(<Placemark {...props} />);
     wrapper.instance().componentWillUnmount();
-
-    expect(removeGeoObject).toHaveBeenCalled();
+    expect(map.geoObjects.remove).toHaveBeenCalled();
   });
 
   it('should call updatePlacemark on dragend', () => {
@@ -50,9 +51,8 @@ describe('Placemark', () => {
       get: jest.fn(() => ({ geometry: { getCoordinates: jest.fn() } })),
     };
 
-    const wrapper = mount(<Placemark {...props} />);
     wrapper.state('placemark').dragend(event);
 
-    expect(updatePlacemark).toHaveBeenCalled();
+    expect(wrapper.props().updatePlacemark).toHaveBeenCalled();
   });
 });
