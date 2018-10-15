@@ -6,42 +6,40 @@ import preloadedState from '../../utils/preloadedState';
 
 describe('<Route />', () => {
   let wrapper;
-  const ymaps = new YmapsStub();
+  let props;
 
-  const settings = {
-    center: [55.76, 37.64],
-    zoom: 16,
-    controls: ['zoomControl'],
-    behaviors: ['drag'],
-  };
+  beforeAll(() => {
+    const settings = {
+      center: [55.76, 37.64],
+      zoom: 16,
+      controls: ['zoomControl'],
+      behaviors: ['drag'],
+    };
 
-  const instance = new ymaps.Map('div', settings);
-  const addPlacemark = jest.fn();
-  const updatePlacemark = jest.fn();
+    const ymaps = new YmapsStub();
+    const instance = new ymaps.Map('div', settings);
+    const { markers } = preloadedState;
+    const addPlacemark = jest.fn();
+    const updatePlacemark = jest.fn();
 
-  const props = {
-    ymaps,
-    instance,
-    markers: preloadedState.markers,
-    addPlacemark,
-    updatePlacemark,
-  };
+    props = {
+      ymaps,
+      instance,
+      markers,
+      addPlacemark,
+      updatePlacemark,
+    };
+
+    wrapper = mount(<Route {...props} />);
+  });
 
   describe('Render', () => {
-    beforeAll(() => {
-      wrapper = mount(<Route {...props} />);
-    });
-
     it('should have Placemarks', () => {
       expect(wrapper.find('Placemark')).toHaveLength(props.markers.length);
     });
   });
 
   describe('Behavior', () => {
-    beforeAll(() => {
-      wrapper = mount(<Route {...props} />);
-    });
-
     it('should not update Route if it has not been changed', () => {
       wrapper.setProps({ markers: props.markers });
 
