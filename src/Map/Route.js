@@ -9,6 +9,8 @@ class Route extends Component {
   static propTypes = {
     ymaps: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     map: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    addPlacemark: PropTypes.func.isRequired,
+    updatePlacemark: PropTypes.func.isRequired,
     markers: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
@@ -21,16 +23,15 @@ class Route extends Component {
 
   componentDidMount() {
     const { ymaps, map } = this.props;
+
     ymaps.ready(() => {
-      const route = new ymaps.Polyline(
-        [],
-        {},
-        {
-          strokeColor: '#000000',
-          strokeWidth: 4,
-          strokeStyle: '1 3',
-        },
-      );
+      const styles = {
+        strokeColor: '#000000',
+        strokeWidth: 4,
+        strokeStyle: '1 3',
+      };
+      const route = new ymaps.Polyline([], {}, styles);
+
       map.geoObjects.add(route);
       this.setState({ route });
     });
@@ -49,16 +50,16 @@ class Route extends Component {
     const { markers } = this.props;
 
     const coordinates = markers.map(marker => marker.coordinates);
-
     route.geometry.setCoordinates(coordinates);
   };
 
   render() {
-    const { markers, ymaps } = this.props;
+    const { markers, ...passThroughProps } = this.props;
+
     return (
       <Fragment>
         {markers.map(marker => (
-          <Placemark {...this.props} ymaps={ymaps} key={marker.id} marker={marker} />
+          <Placemark key={marker.id} marker={marker} {...passThroughProps} />
         ))}
       </Fragment>
     );

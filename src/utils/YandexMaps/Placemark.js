@@ -11,16 +11,16 @@ class Placemark extends Component {
   };
 
   static propTypes = {
+    ymaps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    map: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    addPlacemark: PropTypes.func.isRequired,
+    updatePlacemark: PropTypes.func.isRequired,
     marker: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       coordinates: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
       onMap: PropTypes.bool.isRequired,
     }).isRequired,
-    ymaps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    map: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    addPlacemark: PropTypes.func.isRequired,
-    updatePlacemark: PropTypes.func.isRequired,
   };
 
   componentDidMount() {

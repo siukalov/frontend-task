@@ -47,8 +47,8 @@ class CustomMap extends Component {
       <Map
         width="100%"
         height="100vh"
-        settings={settings}
         ymaps={ymaps}
+        settings={settings}
         saveMapInstance={this.saveMapInstance}
         captureMapUpdate={this.captureMapUpdate}
       >
