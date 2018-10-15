@@ -66,6 +66,7 @@ typings/
 
 # testing
 /coverage
+jsconfig.json
 
 # production
 /build

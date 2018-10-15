@@ -37,4 +37,15 @@ describe('Actions', () => {
 
     expect(actions.reorderMarkers(oldIndex, newIndex)).toEqual(expectedAction);
   });
+
+  it('should create an action to save map center ', () => {
+    const center = [55.77115966031854, 37.670387870739184];
+
+    const expectedAction = {
+      type: types.SAVE_MAP_CENTER,
+      center,
+    };
+
+    expect(actions.saveCenter(center)).toEqual(expectedAction);
+  });
 });

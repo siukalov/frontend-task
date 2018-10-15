@@ -2,14 +2,14 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MarkerList, mapStateToProps, mapDispatchToProps } from '../index';
 import { Item } from '../Styled';
-import preloadedState from './preloadedState';
+import preloadedState from '../../utils/preloadedState';
 
 describe('<MarkerList />', () => {
   let wrapper;
   const handleRemoveSpy = jest.fn();
   const { markers } = preloadedState;
 
-  describe('Rendering', () => {
+  describe('Render', () => {
     beforeAll(() => {
       wrapper = mount(<MarkerList handleRemove={handleRemoveSpy} markers={markers} />);
     });
@@ -19,21 +19,21 @@ describe('<MarkerList />', () => {
     });
   });
 
-  describe('Interaction', () => {
+  describe('Behavior', () => {
     let dispatchSpy = jest.fn();
 
     beforeEach(() => {
       dispatchSpy = jest.fn();
     });
 
-    it('mapDispatchToProps handleRemove', () => {
+    it('should do mapDispatchToProps for handleRemove', () => {
       expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('handleRemove');
 
       mapDispatchToProps(dispatchSpy).handleRemove(0);
       expect(dispatchSpy).toHaveBeenCalledWith({ id: 0, type: 'REMOVE_MARKER' });
     });
 
-    it('mapDispatchToProps onSortEnd', () => {
+    it('should do mapDispatchToProps for onSortEnd', () => {
       expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('onSortEnd');
 
       const oldIndex = 0;
@@ -46,7 +46,7 @@ describe('<MarkerList />', () => {
       });
     });
 
-    it('mapStateToProps markers', () => {
+    it('should do mapStateToProps for the markers prop', () => {
       expect(mapStateToProps(preloadedState)).toEqual({ markers });
     });
   });

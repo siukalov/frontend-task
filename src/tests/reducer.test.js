@@ -136,4 +136,90 @@ describe('Reducer', () => {
     };
     expect(reducer(state, actions.reorderMarkers(oldIndex, newIndex))).toEqual(nextState);
   });
+
+  it('should handle SAVE_MAP_CENTER', () => {
+    const state = Immutable({
+      center: null,
+      markers: [],
+    });
+
+    const newCenter = [55.77115966031854, 37.670387870739184];
+
+    const nextState = Immutable({
+      center: newCenter,
+      markers: [],
+    });
+
+    expect(reducer(state, actions.saveCenter(newCenter))).toEqual(nextState);
+  });
+
+  it('should handle ADD_PLACEMARK', () => {
+    const state = Immutable({
+      center: [55, 38],
+      markers: [
+        {
+          id: 0,
+          name: 'Home',
+          coordinates: [55, 38],
+          onMap: false,
+        },
+      ],
+    });
+
+    const nextState = Immutable({
+      center: [55, 38],
+      markers: [
+        {
+          id: 0,
+          name: 'Home',
+          coordinates: [55, 38],
+          onMap: true,
+        },
+      ],
+    });
+
+    expect(reducer(state, actions.addMarkerOnMap(0))).toEqual(nextState);
+  });
+
+  it('should handle UPDATE_MARKER_COORDS', () => {
+    const state = Immutable({
+      center: [55, 38],
+      markers: [
+        {
+          id: 0,
+          name: 'Home',
+          coordinates: [55, 38],
+          onMap: true,
+        },
+        {
+          id: 1,
+          name: 'Work',
+          coordinates: [52, 28],
+          onMap: true,
+        },
+      ],
+    });
+
+    const newCoordinates = [33, 33];
+
+    const nextState = Immutable({
+      center: [55, 38],
+      markers: [
+        {
+          id: 0,
+          name: 'Home',
+          coordinates: newCoordinates,
+          onMap: true,
+        },
+        {
+          id: 1,
+          name: 'Work',
+          coordinates: [52, 28],
+          onMap: true,
+        },
+      ],
+    });
+
+    expect(reducer(state, actions.updateMarkerCoords(0, newCoordinates))).toEqual(nextState);
+  });
 });

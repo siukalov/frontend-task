@@ -6,19 +6,19 @@ export default Immutable({
     {
       id: 0,
       name: 'Home',
-      coordinates: null,
+      coordinates: [55, 38],
       onMap: false,
     },
     {
       id: 1,
       name: 'Work',
-      coordinates: null,
+      coordinates: [55, 34],
       onMap: false,
     },
     {
       id: 2,
       name: 'Shop',
-      coordinates: null,
+      coordinates: [53, 37],
       onMap: false,
     },
   ],
