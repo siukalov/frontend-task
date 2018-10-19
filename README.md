@@ -6,10 +6,6 @@
 
 [Route editor](https://siukalov-route-editor.now.sh/)
 
-<img width="500"
-     alt="Route editor screenshot"
-     src="images/route_editor.png">
-
 <img alt="Route editor demo"
      src="images/route_editor_demo.gif">
 
