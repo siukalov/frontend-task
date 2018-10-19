@@ -20,14 +20,14 @@ describe('<Route />', () => {
     const map = new ymaps.Map('div', settings);
     const { markers } = preloadedState;
     const addPlacemark = jest.fn();
-    const updatePlacemark = jest.fn();
+    const movePlacemark = jest.fn();
 
     props = {
       ymaps,
       map,
       markers,
       addPlacemark,
-      updatePlacemark,
+      movePlacemark,
     };
 
     wrapper = mount(<Route {...props} />);

@@ -32,7 +32,7 @@ class Map extends Component {
 
       // pass Map to React data when it has been updated
       this.instance.events.add('actionend', () => captureMapUpdate(this.instance));
-      saveMapInstance(this.instance); // TODO: rename
+      saveMapInstance(this.instance);
     });
   }
 
