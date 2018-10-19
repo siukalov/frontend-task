@@ -4,34 +4,44 @@ import Placemark from '../Placemark';
 import YmapsStub from '../../ymapsStub';
 
 describe('Placemark', () => {
-  const ymaps = new YmapsStub();
   const settings = {
     center: [55.76, 37.64],
     zoom: 16,
     controls: ['zoomControl'],
     behaviors: ['drag'],
   };
+
+  const ymaps = new YmapsStub();
   const map = new ymaps.Map('div', settings);
 
   let wrapper;
 
   beforeEach(() => {
-    const addPlacemark = jest.fn();
-    const updatePlacemark = jest.fn();
-    const mapDidUpdate = jest.fn();
+    const addPlacemarkCallback = jest.fn();
+    const movePlacemarkCallback = jest.fn();
+    const balloonOpenCallback = jest.fn();
+    const savePlacemarkInstance = jest.fn();
+
+    const options = {
+      draggable: true,
+      hasBalloon: true,
+      preset: 'islands#blueIcon',
+    };
+
+    const properties = {
+      balloonContent: 'Home',
+    };
 
     const props = {
-      marker: {
-        id: 0,
-        name: 'Home',
-        coordinates: [55, 38],
-        onMap: false,
-      },
       ymaps,
       map,
-      addPlacemark,
-      updatePlacemark,
-      mapDidUpdate,
+      coordinates: [55, 38],
+      properties,
+      options,
+      savePlacemarkInstance,
+      addPlacemarkCallback,
+      movePlacemarkCallback,
+      balloonOpenCallback,
     };
 
     wrapper = mount(<Placemark {...props} />);
@@ -46,13 +56,19 @@ describe('Placemark', () => {
     expect(map.geoObjects.remove).toHaveBeenCalled();
   });
 
-  it('should call updatePlacemark on drag', () => {
+  it('should call movePlacemarkCallback on drag', () => {
+    const coordinates = [32, 54];
     const event = {
-      get: jest.fn(() => ({ geometry: { getCoordinates: jest.fn() } })),
+      get: jest.fn(() => ({ geometry: { getCoordinates: jest.fn(() => coordinates) } })),
     };
+    wrapper.instance().placemark.drag(event);
 
-    wrapper.state('placemark').drag(event);
+    expect(wrapper.props().movePlacemarkCallback).toHaveBeenCalledWith(coordinates);
+  });
 
-    expect(wrapper.props().updatePlacemark).toHaveBeenCalled();
+  it('should call balloonOpenCallback on balloonopen', () => {
+    wrapper.instance().placemark.balloonopen();
+
+    expect(wrapper.props().balloonOpenCallback).toHaveBeenCalled();
   });
 });

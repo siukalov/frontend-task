@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import isEqual from 'lodash/isEqual';
 import PropTypes from 'prop-types';
-import Placemark from '../utils/YandexMaps/Placemark';
+import Placemark from './Placemark';
 
 class Route extends Component {
   state = { route: null };
@@ -10,7 +10,7 @@ class Route extends Component {
     ymaps: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     map: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     addPlacemark: PropTypes.func.isRequired,
-    updatePlacemark: PropTypes.func.isRequired,
+    movePlacemark: PropTypes.func.isRequired,
     markers: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
