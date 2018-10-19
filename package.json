@@ -2,8 +2,12 @@
   "name": "frontend-task",
   "version": "0.1.0",
   "private": true,
+  "now": {
+    "alias": "siukalov-route-editor"
+  },
   "dependencies": {
     "antd": "^3.9.3",
+    "coveralls": "^3.0.2",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "load-js": "^3.0.3",
@@ -22,9 +26,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "cover": "react-scripts test --env=jsdom --verbose --coverage",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --verbose --coverage",
     "watch": "react-scripts test --env=jsdom --watch=*.js",
+    "testinci": "yarn test --coverageReporters=text-lcov | ./node_modules/coveralls/bin/coveralls.js",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
