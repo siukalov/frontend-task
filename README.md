@@ -1,7 +1,6 @@
 # Frontend test task to build a route editor
 
 [![Build Status](https://travis-ci.org/siukalov/frontend-task.svg?branch=master)](https://travis-ci.org/siukalov/frontend-task)
-
 [![Coverage Status](https://coveralls.io/repos/github/siukalov/frontend-task/badge.svg?branch=master)](https://coveralls.io/github/siukalov/frontend-task?branch=master)
 
 [Route editor](https://siukalov-route-editor.now.sh/)
