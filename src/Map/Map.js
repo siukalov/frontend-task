@@ -19,7 +19,7 @@ class CustomMap extends Component {
     settings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     setCenter: PropTypes.func.isRequired,
     addPlacemark: PropTypes.func.isRequired,
-    updatePlacemark: PropTypes.func.isRequired,
+    movePlacemark: PropTypes.func.isRequired,
     center: PropTypes.arrayOf(PropTypes.number.isRequired),
     markers: PropTypes.arrayOf(
       PropTypes.shape({
@@ -44,7 +44,7 @@ class CustomMap extends Component {
 
   render() {
     const {
-      ymaps, markers, settings, addPlacemark, updatePlacemark,
+      ymaps, markers, settings, addPlacemark, movePlacemark,
     } = this.props;
     const { map } = this.state;
 
@@ -58,13 +58,7 @@ class CustomMap extends Component {
         captureMapUpdate={this.captureMapUpdate}
       >
         {map && (
-          <Route
-            ymaps={ymaps}
-            map={map}
-            markers={markers}
-            addPlacemark={addPlacemark}
-            updatePlacemark={updatePlacemark}
-          />
+          <Route ymaps={ymaps} map={map} markers={markers} addPlacemark={addPlacemark} movePlacemark={movePlacemark} />
         )}
       </Map>
     );
@@ -75,7 +69,8 @@ const mapStateToProps = state => ({
   ...state,
 });
 
-const throttledUpdatePlacemark = throttle(
+// call once per 17ms ≈ 1 second / 60 frames
+const throttledUpdateMarkerCoords = throttle(
   (dispatch, id, coordinates) => dispatch(updateMarkerCoords(id, coordinates)),
   17,
 );
@@ -83,7 +78,7 @@ const throttledUpdatePlacemark = throttle(
 const mapDispatchToProps = dispatch => ({
   setCenter: coordinates => dispatch(saveCenter(coordinates)),
   addPlacemark: id => dispatch(addMarkerOnMap(id)),
-  updatePlacemark: (id, coordinates) => throttledUpdatePlacemark(dispatch, id, coordinates),
+  movePlacemark: (id, coordinates) => throttledUpdateMarkerCoords(dispatch, id, coordinates),
 });
 
 export default connect(

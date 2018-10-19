@@ -26,7 +26,7 @@ describe('<Map />', () => {
         setCenter: jest.fn(),
         center: inititialMapCenter,
         addPlacemark: jest.fn(),
-        updatePlacemark: jest.fn(),
+        movePlacemark: jest.fn(),
         markers: [],
         settings,
         ymaps,
@@ -53,7 +53,7 @@ describe('<Map />', () => {
         setCenter: jest.fn(),
         center: coordinates,
         addPlacemark: jest.fn(),
-        updatePlacemark: jest.fn(),
+        movePlacemark: jest.fn(),
         markers: preloadedState.markers,
         settings,
         ymaps,
@@ -88,10 +88,10 @@ describe('<Map />', () => {
       });
     });
 
-    it('should do mapDispatchToProps for updatePlacemark', () => {
-      expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('updatePlacemark');
+    it('should do mapDispatchToProps for movePlacemark', () => {
+      expect(mapDispatchToProps(dispatchSpy)).toHaveProperty('movePlacemark');
 
-      mapDispatchToProps(dispatchSpy).updatePlacemark(0, [33, 33]);
+      mapDispatchToProps(dispatchSpy).movePlacemark(0, [33, 33]);
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: 'UPDATE_MARKER_COORDS',
         coordinates: [33, 33],
