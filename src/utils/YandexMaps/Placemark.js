@@ -6,8 +6,8 @@ class Placemark extends Component {
     ymaps: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     map: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     coordinates: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+    properties: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     options: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-    styles: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     savePlacemarkInstance: PropTypes.func.isRequired,
     addPlacemarkCallback: PropTypes.func.isRequired,
     movePlacemarkCallback: PropTypes.func.isRequired,
@@ -34,10 +34,10 @@ class Placemark extends Component {
 
   createPlacemark = () => {
     const {
-      ymaps, coordinates, options, styles,
+      ymaps, coordinates, properties, options,
     } = this.props;
 
-    return new ymaps.Placemark(coordinates, options, styles);
+    return new ymaps.Placemark(coordinates, properties, options);
   };
 
   addOnMap = () => {

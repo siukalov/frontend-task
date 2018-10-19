@@ -22,13 +22,13 @@ describe('Placemark', () => {
     const balloonOpenCallback = jest.fn();
     const savePlacemarkInstance = jest.fn();
 
-    const styles = {
+    const options = {
       draggable: true,
       hasBalloon: true,
       preset: 'islands#blueIcon',
     };
 
-    const options = {
+    const properties = {
       balloonContent: 'Home',
     };
 
@@ -36,8 +36,8 @@ describe('Placemark', () => {
       ymaps,
       map,
       coordinates: [55, 38],
+      properties,
       options,
-      styles,
       savePlacemarkInstance,
       addPlacemarkCallback,
       movePlacemarkCallback,

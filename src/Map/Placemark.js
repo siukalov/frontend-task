@@ -4,12 +4,6 @@ import isEqual from 'lodash/isEqual';
 import { memoize } from 'lodash/function';
 import Placemark from '../utils/YandexMaps/Placemark';
 
-const styles = {
-  draggable: true,
-  hasBalloon: true,
-  preset: 'islands#blueIcon',
-};
-
 class CustomPlacemark extends Component {
   state = { placemark: null };
 
@@ -46,6 +40,7 @@ class CustomPlacemark extends Component {
     });
   };
 
+  // use memoize to cache geocode results
   getAddress = memoize(this.geocode, coordinates => coordinates.join('_'));
 
   savePlacemarkInstance = (placemark) => {
@@ -92,14 +87,20 @@ class CustomPlacemark extends Component {
     } = this.props;
     const { id, name, coordinates } = marker;
 
-    const options = {
+    const properties = {
       balloonContentHeader: name,
     };
 
-    const newProps = {
+    const options = {
+      draggable: true,
+      hasBalloon: true,
+      preset: 'islands#blueIcon',
+    };
+
+    const props = {
       coordinates,
-      styles, // TODO: rename styles and props as options and properties in ymaps api
       options,
+      properties,
       ...passThroughProps,
     };
 
@@ -111,7 +112,7 @@ class CustomPlacemark extends Component {
         addPlacemarkCallback={this.addPlacemarkCallback}
         movePlacemarkCallback={this.movePlacemarkCallback}
         balloonOpenCallback={this.balloonOpenCallback}
-        {...newProps}
+        {...props}
       />
     );
   }
